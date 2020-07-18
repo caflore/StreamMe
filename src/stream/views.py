@@ -25,7 +25,7 @@ def start_stream(request):
     stream.save()
 
     # Redirect to the streamer's public username
-    return redirect(stream.user.username)
+    return redirect("/" + stream.user.username)
 
 
 @require_POST

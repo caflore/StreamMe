@@ -1,0 +1,12 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}
+<title>StreamMe | Login</title>
+{% endblock title%}
+
+{% block content %}
+<h2 class="account-heading">{{ user.username }}</h2>
+<h5 class="text-secondary">Stream Key: {{ user.stream.key }}</h3>
+
+{% endblock content %}

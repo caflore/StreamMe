@@ -6,6 +6,6 @@ def fake_view(*args, **kwargs):
 
 urlpatterns = [
     path('start_stream', views.start_stream, name='start-stream'),
-    path('stop_stream/', views.stop_stream, name='stop-login'),
-    path('live/<username>/index.m3u8', fake_view, name="hls-url")
+    path('stop_stream', views.stop_stream, name='stop-login'),
+    path('live/<username>/index.m3u8', fake_view, name="hls-url"),
 ]

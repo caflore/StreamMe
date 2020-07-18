@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}{% endblock %}
 
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
@@ -16,26 +20,46 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top mb-4">
         <div class="container">
             <a class="navbar-brand" href="#">StreamMe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app-home'%}">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app-streams' %}">Live Streams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app-vods' %}">VODS</a>
+                </li>
+            </ul>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'app-home'%}">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app-profile' %}">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'app-signup' %}">Sign-Up</a>
+                        <a class="nav-link" href="{% url 'app-vod-create' %}">Upload VOD </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app-logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app-signup' %}">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'app-login' %}">Login</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -44,7 +68,7 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 {% block content %}{% endblock %}
             </div>
         </div>

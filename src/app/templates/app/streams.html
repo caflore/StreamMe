@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}
+<title>StreamMe | Streams</title>
+{% endblock title%}
+
+{% block content %}
+    {% for stream in streams %}
+        {% if stream.is_live == True %}
+        <div style="background-color: #D3D3D3; padding: 20px;" class="rounded mb-4">
+            <div>
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'app-stream-detail' stream.id %}">{{ stream.user.username }}</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            <strong>Sorry!</strong> There are no Live Streams!
+          </div>
+        {% endif %}
+    {% endfor%}
+{% endblock content %}

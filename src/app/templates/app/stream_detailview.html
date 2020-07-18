@@ -1,0 +1,40 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}
+<title>StreamMe</title>
+{% endblock title%}
+
+{% block content %}
+<div style="background-color: #D3D3D3; padding: 20px;" class="rounded">
+    <video id="video" width='100%' height='580' controls autoplay></video>
+    <h2><a class="article-title" href="#">{{ stream.user.username }}</a></h2>
+    <p class="article-content">{{ vod.description  }}</p>
+    <script>
+        if (Hls.isSupported()) {
+            console.log("hello hls.js!");
+            var video = document.getElementById('video');
+            var hls = new Hls();
+            // bind them together
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                console.log("video and hls.js are now bound together !");
+                hls.loadSource("{{ request.get_host }}{{ stream.hls_url }}");
+                hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+                    console.log("manifest loaded, found " + data.levels.length + " quality level");
+                    video.play();
+
+                });
+            });
+        }
+
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        }
+
+    </script>
+</div>
+{% endblock content %}
